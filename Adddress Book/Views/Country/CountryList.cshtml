@@ -1,0 +1,98 @@
+﻿@model DataTable
+@using System.Data
+<div class="pagetitle">
+    <h1>Country Tables</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+            <li class="breadcrumb-item">Country</li>
+            <li class="breadcrumb-item active">Country List</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Search Country</h5>
+                    <!-- No Labels Form -->
+                    <form class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control border border-black" placeholder="Country Name">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="number" class="form-control border border-black" placeholder="Country Code">
+                        </div>              
+                        <div class="text-start">
+                            <button type="submit" class="btn btn-success">Search</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </div>
+                    </form><!-- End No Labels Form -->
+                    <br />
+                    <h5 class="card-title">Country List</h5>
+                    <div class="text-danger">
+                        @{
+    if (@TempData["SuccessMessage"] != null)
+    {
+        <p>@TempData["SuccessMessage"]</P>
+}
+ if (@TempData["ErrorMessage"] != null)
+    {
+        <p>@TempData["ErrorMessage"]</P>
+}
+}
+</div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="d-flex p-3 justify-content-end">
+                            <a asp-action="CountryForm" asp-controller="Country" class="btn btn-primary w-20">
+                                <i class="bi bi-plus"></i> Add Country
+                            </a>
+                        </div>
+                         <div class="d-flex p-3 justify-content-end">
+                            <a asp-action="ExportToExcel" asp-controller="Country" class="btn btn-primary w-20">
+                                <i class="bi bi-download"></i>  Excel Download
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th>Country ID</th>
+                                <th>Country Name</th>
+                                <th>Country Code</th>
+                                <th data-type="date" data-format="YYYY/DD/MM">Creation Date</th>
+                                <th>User Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (DataRow row in Model.Rows)
+                            {
+                                <tr>
+                                    <td>@row["CountryID"]</td>
+                                    <td>@row["CountryName"]</td>
+                                    <td>@row["CountryCode"]</td>
+                                    <td>@row["CreationDate"]</td>
+                                    <td>@row["UserName"]</td>
+                                    <td>
+                                        <a asp-controller="Country" asp-action="CountryForm" asp-route-CountryID="@row["CountryID"]" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                        <a asp-action="CountryDelete" asp-route-CountryID="@row["CountryID"]" onclick="confirmDelete()" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+                </div>
+            </div>
+        </div>
+</section>
+<script>
+    function confirmDelete() {
+        return confirm("Are you Sure! You want to Delete this record from Product?")
+    }
+</script>

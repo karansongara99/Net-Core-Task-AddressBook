@@ -1,0 +1,49 @@
+﻿@using System.Data
+@model CountryModel
+
+<div class="pagetitle">
+    <h1>Country Forms</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+            <li class="breadcrumb-item">Country</li>
+            <li class="breadcrumb-item active">Add Edit</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Country Add/Edit</h5>
+                    <!-- Form -->
+                    <form class="row g-3" asp-controller="Country" asp-action="CountrySave" method="post">
+                        <input type="hidden" asp-for="CountryID" />
+                        <div class="col-md-6">
+                            <input type="text" asp-for="CountryName" class="form-control border border-black" placeholder="Country Name">
+                            <span class="text-danger" asp-validation-for="CountryName"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" asp-for="CountryCode" class="form-control border border-black" placeholder="Country Code">
+                            <span class="text-danger" asp-validation-for="CountryCode"></span>
+                        </div>
+                        <div class="text-start">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a asp-action="CountryList" asp-controller="Country" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </form><!-- End No Labels Form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <a href="~/lib/jquery/dist/jquery.min.map">~/lib/jquery/dist/jquery.min.map</a>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -1,0 +1,89 @@
+﻿@model DataTable
+@using System.Data
+
+<div class="pagetitle">
+    <h1>User Tables</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="index" asp-controller="Home">Home</a></li>
+            <li class="breadcrumb-item">User</li>
+            <li class="breadcrumb-item active">User List</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Search User</h5>
+                    <!-- No Labels Form -->
+
+                    <form class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control border border-black" placeholder="User Name">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="tel" class="form-control border border-black" placeholder="Mobile No">
+                        </div>
+                        <div class="text-start">
+                            <button type="submit" class="btn btn-success">Search</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </div>
+                    </form><!-- End No Labels Form -->
+                    <br />
+                    <h5 class="card-title">User List</h5>
+                                       <div class="text-danger">
+                        @{
+    if (@TempData["SuccessMessage"] != null)
+    {
+        <p>@TempData["SuccessMessage"]</P>
+}
+ if (@TempData["ErrorMessage"] != null)
+    {
+        <p>@TempData["ErrorMessage"]</P>
+}
+}
+</div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>User Name</th>
+                                <th>Mobile No</th>
+                                <th>Email Id</th>
+                                <th data-type="date" data-format="YYYY/DD/MM">Creation Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (DataRow row in Model.Rows)
+                            {
+                                <tr>
+                                    <td>@row["UserID"]</td>
+                                    <td>@row["UserName"]</td>
+                                    <td>@row["MobileNo"]</td>
+                                    <td>@row["EmailID"]</td>
+                                    <td>@row["CreationDate"]</td>
+                                    <td>
+                                        <a asp-controller="User" asp-action="UserForm" asp-route-UserID="@row["UserID"]" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                        <a asp-action="UserDelete" asp-route-UserID="@row["UserID"]" onclick="confirmDelete()" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you Sure! You want to Delete this record from User?")
+    }
+</script>
